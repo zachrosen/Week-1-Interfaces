@@ -8,11 +8,16 @@ var app;
     displayVehicles();
     function displayVehicles() {
         var elemString = "";
-        vehicles.forEach(function (v) {
-            elemString += "<tr>\n    <td>" + v.make + "</td>\n    <td>" + v.model + "</td>\n    <td>" + v.color + "</td>\n    <td>" + v.numDoors + "</td>\n    <td>" + v.numSeats + "</td>\n    <td>N/A</td>\n    </tr>\n    ";
+        vehicles.forEach(function (v, index) {
+            elemString += "<tr>\n    <td>" + v.make + "</td>\n    <td>" + v.model + "</td>\n    <td>" + v.color + "</td>\n    <td>" + v.numDoors + "</td>\n    <td>" + v.numSeats + "</td>\n    <td>N/A</td>\n    <td class=\"hcenter\"> <button class=\"btn btn-danger\" onclick=\"app.deleteVehicle(" + index + ")\">Delete</button> </td>\n    </tr>\n    ";
         });
         $('#vehicle-display').html(elemString);
     }
+    function deleteVehicle(index) {
+        vehicles.splice(index, 1);
+        displayVehicles();
+    }
+    app.deleteVehicle = deleteVehicle;
     function startVehicleCreate() {
         $('#create-header').html('<span>Choose a vehicle type: </span><select class="form-control" style="max-width: 10%; display: inline-block;" id="create-vehicle-type" onchange="app.chooseVehicleStyle()"><option disabled selected>---</option><option value = "Car">Car</option><option value = "Truck">Truck</option></select><span> or </span><a>Cancel</a>');
     }
@@ -35,7 +40,6 @@ var app;
         var isCool = $('#car-isCool-input').val();
         var tempCar = new app.models.Car(make, model, numDoors, numSeats, isCool);
         vehicles.push(tempCar);
-        console.log(tempCar);
         displayVehicles();
         $('#car-make-input').val('');
         $('#car-model-input').val('');

@@ -9,7 +9,7 @@ namespace app {
 
     function displayVehicles() {
         let elemString = "";
-        vehicles.forEach((v) => {
+        vehicles.forEach((v, index) => {
             elemString += `<tr>
     <td>${v.make}</td>
     <td>${v.model}</td>
@@ -17,12 +17,18 @@ namespace app {
     <td>${v.numDoors}</td>
     <td>${v.numSeats}</td>
     <td>N/A</td>
+    <td class="hcenter"> <button class="btn btn-danger" onclick="app.deleteVehicle(${index})">Delete</button> </td>
     </tr>
     `
         });
         $('#vehicle-display').html(elemString);
         //document.getElementbyId('vehicle-display').innerHTML = elemString;
     }
+    export function deleteVehicle(index: number) {
+      vehicles.splice(index, 1);
+      displayVehicles();
+        }
+
     export function startVehicleCreate() {
         $('#create-header').html('<span>Choose a vehicle type: </span><select class="form-control" style="max-width: 10%; display: inline-block;" id="create-vehicle-type" onchange="app.chooseVehicleStyle()"><option disabled selected>---</option><option value = "Car">Car</option><option value = "Truck">Truck</option></select><span> or </span><a>Cancel</a>'
         );
@@ -69,7 +75,8 @@ namespace app {
     </div>
       `)
         } else if (type === 'Truck') {
-
+          //TODO: add create truck form
+          //TODO: add createTruck() method
         }
     }
 
@@ -83,7 +90,6 @@ namespace app {
 
   let tempCar = new models.Car(make, model, numDoors, numSeats, isCool);
   vehicles.push(tempCar);
-  console.log(tempCar);
   displayVehicles();
 
   //input.value = '';
