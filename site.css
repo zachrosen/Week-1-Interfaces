@@ -1,0 +1,10 @@
+.hcenter {
+  text-align: center;
+}
+a {
+  cursor: pointer;
+}
+.form-group{
+  max-width: 25%;
+  display: inline-block;
+}
